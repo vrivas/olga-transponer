@@ -1,0 +1,62 @@
+<html>
+<head>
+    <style>
+        input {
+            font-size: 14pt;
+            padding: .3em;
+            margin: .2em;
+        }
+    </style>
+<script>
+  let letras="ABCDEFGH";
+  const transpose = (matrix) => {
+    let [row] = matrix
+    return row.map((value, column) => matrix.map(row => row[column]))
+    }
+    const transformar=() => {
+        var filas=document.getElementById("original").value.split("\n")
+        var matriz=filas.map(i=>i.split("\t"))
+        //var matriz=transpose(matriz)
+        console.log( matriz)
+        // Primera lÃ­nea
+        document.getElementById("taResultado").value="[Sample Setup],,,,,,,,,,\n\
+Well,Well Position,Sample Name,Biogroup Name,Biogroup Color,Target Name,Task,Reporter,Quencher,Quantity,Comments\n"
+        for( var i=0; i<8; ++i ) {
+            for( var j=0; j<12; ++j ) {
+                var celda=letras[i]+(j+1);
+                var dato=(typeof matriz[i]!="undefined" && typeof matriz[i][j]!="undefined")?matriz[i][j]:",";
+                /*document.getElementById("resultado").innerHTML+=(i*12+j+1)+","+celda;
+                document.getElementById("resultado").innerHTML+=","+dato+",,,,,,,,";
+                document.getElementById("resultado").innerHTML+="<br/>";*/
+
+                document.getElementById("taResultado").value+=(i*12+j+1)+","+celda;
+                document.getElementById("taResultado").value+=","+dato+",,,,,,,,";
+                document.getElementById("taResultado").value+="\n";
+            }
+        }
+    }
+
+    const borrar  =()=> {
+        document.getElementById("original").value=""
+        document.getElementById("resultado").innerHTML=""
+    }
+</script>
+</head>
+<body>
+<h2>Datos originales</h2>
+<p>Copiar y pegar directamente desde Excel</p>
+<textarea rows="12" cols="150" id="original"></textarea>
+<br/>
+<input type="button" value="Convertir" id="btConvertir">
+<input type="button" value="Borrar" id="btBorrar">
+
+<h2>Resultado</h2>
+<p>Hacer click en el textarea y a continuación Ctrl+A y Ctrl+C para copiar. </p>
+<div id="resultado"></div>
+<textarea cols="150" rows="100" id="taResultado"></textarea>
+<script>
+    document.getElementById("btConvertir").onclick=transformar
+    document.getElementById("btBorrar").onclick=borrar
+</script>
+</body>
+</html>
